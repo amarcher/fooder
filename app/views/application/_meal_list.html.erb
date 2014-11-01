@@ -1,10 +1,14 @@
+  <% #TODO: Remove this! %>
+  <% @items = Array.new(5) {"Burger"} %>
+
+
 <h1>List of Dishes</h1>
 <ul class="no-bullet list">
-  <li>
-    <img src="#">Burger
-  </li>
-  <li>Burger</li>
-  <li>Burger</li>
-  <li>Burger</li>
-  <li>Burger</li>
+  <% if @items.empty? %>
+    <p>No items</p>
+  <% else %>
+    <% @items.each do |item| %>
+      <%= render partial: 'item', locals: {item: item} %>
+    <% end %>
+  <% end %>
 </ul>
