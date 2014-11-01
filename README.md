@@ -1,4 +1,4 @@
-Tinder for Food
+Fooder
 ===============
 
 ##User Stories
