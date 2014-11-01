@@ -5,11 +5,10 @@ var ListView = function(){
 ListView.prototype = {
 
   updateList: function(){
-
   },
 
-  appendToList: function(){
-
+  appendToList: function(item_partial){
+    $(this.list).append(item_partial)
   }
 
 }
