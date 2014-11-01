@@ -4,10 +4,8 @@ var DishList = function() {
 
 DishList.prototype = {
 
-  getNextItem: function(){
-
+  addItem: function(item){
+    this.items.push(item);
   },
-  getItemsOnList: function(){
 
-  }
 }
