@@ -5,7 +5,7 @@ var TinderView = function(){
 
 TinderView.prototype = {
 
-  show: function(item){
+  show: function(item_partial){
 
   }
 
