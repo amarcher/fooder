@@ -1,8 +1,10 @@
-var Controller = function(listView, tinderView, model, list) {
-  this.listView = listView;
-  this.tinderView = tinderView;
-  this.model = model;
-  this.list = list;
+var Controller = function(params) {
+  this.listView = params.listView;
+  this.tinderView = params.tinderView;
+  this.comparinatorView = params.comparinatorView;
+  this.model = params.model;
+  this.list = params.list;
+  this.currentView = 0;
 }
 
 Controller.prototype = {
@@ -10,6 +12,7 @@ Controller.prototype = {
   bindEvents: function(){
     $(this.tinderView.yesButton).on("click", this.liked.bind(this));
     $(this.tinderView.noButton).on("click", this.disliked.bind(this));
+    $(this.listView.compare).on("click", this.toggleViews.bind(this));
   },
 
   updateView: function(){
@@ -25,11 +28,12 @@ Controller.prototype = {
     item = this.model.getCurrentItem()
     this.list.addItem(item);
     this.listView.appendToList("<li>"+item.name.text+"</li>");
+    this.tinderView.replaceFood("#", this.model.getNextItem().name.text, "Fresh Roll");
   },
 
   disliked: function(e){
     e.preventDefault();
-    this.tinderView.replaceFood("#", this.model.getNextItem().name.text, "Fresh Roll"); 
+    this.tinderView.replaceFood("#", this.model.getNextItem().name.text, "Fresh Roll");
   },
 
   fetchList: function(){
@@ -44,18 +48,47 @@ Controller.prototype = {
       this.updateView();
 
     }.bind(this));
+  },
+
+
+  toggleViews: function(){
+    this.currentView ^= 1;
+    if (this.currentView == 0){
+      this.showTinder();
+    } else {
+      this.showComparinator();
+    }
+  },
+
+  showComparinator: function(){
+    this.tinderView.hide();
+    this.comparinatorView.show(); // TODO: Make deferred object
+    this.listView.switchToComparinator();
+  },
+
+  showTinder: function(){
+    this.comparinatorView.hide();
+    this.tinderView.show(); // TODO: Make deferred object
+    this.listView.switchToTinder();
   }
 
 }
 
 $(document).ready(function(){
-  app = new Controller(new ListView(), new TinderView(), new DishList(), new DishList());
+
+  app = new Controller( {
+    listView: new ListView(),
+    tinderView: new TinderView(),
+    comparinatorView: new ComparinatorView(),
+    model: new DishList(),
+    list: new DishList()
+  } );
 
   var overlay = '<div class="overlay">' +
             '<img class="loading" src="http://bit.ly/pMtW1K">' +
             '</div>';
-  $(overlay).appendTo('body');
+  // $(overlay).appendTo('body');
 
-  app.fetchList();
+  // app.fetchList();
   app.bindEvents();
 });
