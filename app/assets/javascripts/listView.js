@@ -1,5 +1,6 @@
 var ListView = function(){
-  this.list = "ul.list"
+  this.list = "ul.list";
+  this.compare = '#show_comparinator'
 }
 
 ListView.prototype = {
@@ -16,6 +17,14 @@ ListView.prototype = {
 
   selectItem: function(index){
     $(this.list + ' > li:nth-of-type(' + index + ')').css("background-color",'rgb(228, 247, 219)');
+  },
+
+  switchToComparinator: function(){
+    $(this.compare).text("Select Food")
+  },
+
+  switchToTinder: function(){
+    $(this.compare).text("Compare Head-to-Head")
   }
 
 }
