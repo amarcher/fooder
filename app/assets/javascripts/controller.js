@@ -13,7 +13,7 @@ Controller.prototype = {
   updateView: function(){
     this.listView.clearList();
     for (var i = 0; i < this.model.items.length; i++) {
-      this.listView.appendToList(this.model.items[i].name.text);
+      this.listView.appendToList("<li>"+this.model.items[i].name.text+"</li>");
     };
   },
 
