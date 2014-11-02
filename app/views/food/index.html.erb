@@ -1,18 +1,6 @@
 <div class="row text-center">
-  <div class="large-6 columns">
-    <h1>Whopper from BK</h1>
-    <div class="row">
-      <ul class="large-block-grid-1 medium-block-grid-1 small-block-grid-1">
-        <li class="box"><img src="http://www.gq.com/blogs/the-feed/gq-fitness-burgers-blog%5B1%5D.jpg"></li>
-      </ul>
-    </div>
-
-    <div class="row">
-      <div class="small-3 columns"><h1><a href="#" id="no" class="button large alert round">X</a></h1></div>
-      <div class="small-6 columns"></div>
-      <div class="small-3 columns"><h1><a href="#" id="yes" class="button large success round">√</a></h1></div>
-    </div>
-  </div>
+  <%= render partial: 'tinder', locals: {show: true} %>
+  <%= render partial: 'comparinator', locals: {show: false} %>
 
   <div class="large-6 columns">
     <%= render partial: "meal_list" %>
