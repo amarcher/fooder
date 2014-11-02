@@ -1,26 +1,35 @@
-var Controller = function(listView, tinderView, model) {
-  this.listView = listView
-  this.tinderView = tinderView
-  this.model = model
+var Controller = function(listView, tinderView, model, list) {
+  this.listView = listView;
+  this.tinderView = tinderView;
+  this.model = model;
+  this.list = list;
 }
 
 Controller.prototype = {
 
   bindEvents: function(){
     $(this.tinderView.yesButton).on("click", this.liked.bind(this));
+    $(this.tinderView.noButton).on("click", this.disliked.bind(this));
   },
 
   updateView: function(){
     this.listView.clearList();
-    for (var i = 0; i < this.model.items.length; i++) {
-      this.listView.appendToList("<li>"+this.model.items[i].name.text+"</li>");
+    for (var i = 0; i < this.list.items.length; i++) {
+      this.listView.appendToList("<li>"+this.list.items[i].name.text+"</li>");
     };
+    this.tinderView.replaceFood("#", this.model.pickItem(0).name.text, "Fresh Roll")
   },
 
   liked: function(e){
     e.preventDefault();
-    this.model.addItem("Pizza");
-    this.listView.appendToList("<li>Pizza</li>");
+    item = this.model.getCurrentItem()
+    this.list.addItem(item);
+    this.listView.appendToList("<li>"+item.name.text+"</li>");
+  },
+
+  disliked: function(e){
+    e.preventDefault();
+    this.tinderView.replaceFood("#", this.model.getNextItem().name.text, "Fresh Roll"); 
   },
 
   fetchList: function(){
@@ -40,7 +49,7 @@ Controller.prototype = {
 }
 
 $(document).ready(function(){
-  app = new Controller(new ListView(), new TinderView(), new DishList());
+  app = new Controller(new ListView(), new TinderView(), new DishList(), new DishList());
 
   var overlay = '<div class="overlay">' +
             '<img class="loading" src="http://bit.ly/pMtW1K">' +
