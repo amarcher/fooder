@@ -13,6 +13,8 @@ Controller.prototype = {
     $(this.tinderView.yesButton).on("click", this.liked.bind(this));
     $(this.tinderView.noButton).on("click", this.disliked.bind(this));
     $(this.listView.compare).on("click", this.toggleViews.bind(this));
+    $(this.comparinatorView.stage_1).on("click", this.choiceOne.bind(this));
+    $(this.comparinatorView.stage_2).on("click", this.choiceTwo.bind(this));
   },
 
   updateView: function(){
@@ -64,12 +66,49 @@ Controller.prototype = {
     this.tinderView.hide();
     this.comparinatorView.show(); // TODO: Make deferred object
     this.listView.switchToComparinator();
+    this.comparinatorView.replaceStage(1,"#", this.list.pickItem(0).name.text, "Fresh Roll");
+    this.comparinatorView.replaceStage(2,"#", this.list.pickItem(1).name.text, "Fresh Roll");
+    this.listView.selectItem(1);
+    this.listView.selectItem(2);
   },
 
   showTinder: function(){
     this.comparinatorView.hide();
     this.tinderView.show(); // TODO: Make deferred object
     this.listView.switchToTinder();
+  },
+
+  choiceOne: function(){
+    // drop two from list
+    this.list.removeItem(1);
+    if (this.list.items.length > 1){
+      // refresh both stages
+      this.comparinatorView.replaceStage(2,"#", this.list.pickItem(1).name.text, "Fresh Roll");
+      // refresh the list
+      this.updateView();
+      this.listView.selectItem(1);
+      this.listView.selectItem(2);
+    } else {
+      this.updateView();
+      this.toggleViews();
+    }
+  },
+
+  choiceTwo: function(){
+    // drop two from list
+    this.list.removeItem(0);
+    if (this.list.items.length > 1){
+      // refresh both stages
+      this.comparinatorView.replaceStage(1,"#", this.list.pickItem(0).name.text, "Fresh Roll");
+      this.comparinatorView.replaceStage(2,"#", this.list.pickItem(1).name.text, "Fresh Roll");
+      // refresh the list
+      this.updateView();
+      this.listView.selectItem(1);
+      this.listView.selectItem(2);
+    } else {
+      this.updateView();
+      this.toggleViews();
+    }
   }
 
 }
@@ -87,8 +126,8 @@ $(document).ready(function(){
   var overlay = '<div class="overlay">' +
             '<img class="loading" src="http://bit.ly/pMtW1K">' +
             '</div>';
-  // $(overlay).appendTo('body');
+  $(overlay).appendTo('body');
 
-  // app.fetchList();
+  app.fetchList();
   app.bindEvents();
 });

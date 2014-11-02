@@ -10,7 +10,7 @@ DishList.prototype = {
   },
 
   removeItem: function(index){
-    this.items.splice(index);
+    this.items.splice(index,1);
   },
 
   pickItem: function(index){
