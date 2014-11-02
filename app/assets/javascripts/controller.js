@@ -11,7 +11,10 @@ Controller.prototype = {
   },
 
   updateView: function(){
-
+    this.listView.clearList();
+    for (var i = 0; i < this.model.items.length; i++) {
+      this.listView.appendToList(this.model.items[i].name.text);
+    };
   },
 
   liked: function(e){
@@ -28,6 +31,8 @@ Controller.prototype = {
       $(".overlay").fadeOut("slow", function(){
         this.remove();
       });
+
+      this.updateView();
 
     }.bind(this));
   }
