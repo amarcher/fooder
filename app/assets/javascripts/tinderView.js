@@ -18,9 +18,9 @@ TinderView.prototype = {
   },
 
   replaceFood: function(image_source, food_name, restaurant){
-    $(this.tinder_image).attr("src","image_source");
+    $(this.tinder_image).attr("src",image_source);
     $(this.tinder_name).html(food_name);
-    $(this.restaurant).html(restaurant);
+    $(this.tinder_restaurant).html(restaurant);
   }
 
 }

@@ -4,13 +4,14 @@ var ListView = function(){
 
 ListView.prototype = {
 
-  updateList: function(){
+  clearList: function(){
+    $(this.list).html('');
   },
 
   appendToList: function(item_partial){
-    $(this.list).append(item_partial)
-    $(this.list + ' > li').last().hide()
-    $(this.list + ' > li').last().fadeIn(400)
+    $(this.list).append(item_partial);
+    $(this.list + ' > li').last().hide();
+    $(this.list + ' > li').last().fadeIn(400);
   },
 
   selectItem: function(index){
