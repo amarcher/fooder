@@ -22,7 +22,7 @@ Controller.prototype = {
     for (var i = 0; i < this.list.items.length; i++) {
       this.listView.appendToList("<li>"+this.list.items[i].name.text+"</li>");
     };
-    this.tinderView.replaceFood("#", this.model.pickItem(0).name.text, "Fresh Roll")
+    this.tinderView.replaceFood(this.model.pickItem(0).image, this.model.pickItem(0).name.text, "Fresh Roll")
   },
 
   liked: function(e){
@@ -30,12 +30,14 @@ Controller.prototype = {
     item = this.model.getCurrentItem()
     this.list.addItem(item);
     this.listView.appendToList("<li>"+item.name.text+"</li>");
-    this.tinderView.replaceFood("#", this.model.getNextItem().name.text, "Fresh Roll");
+    item = this.model.getNextItem()
+    this.tinderView.replaceFood(item.image, item.name.text, "Fresh Roll");
   },
 
   disliked: function(e){
     e.preventDefault();
-    this.tinderView.replaceFood("#", this.model.getNextItem().name.text, "Fresh Roll");
+    item = this.model.getNextItem()
+    this.tinderView.replaceFood(item.image, item.name.text, "Fresh Roll");
   },
 
   fetchList: function(){
@@ -47,9 +49,16 @@ Controller.prototype = {
         this.remove();
       });
 
+      this.includeImages();
       this.updateView();
-
+      
     }.bind(this));
+  },
+
+  includeImages: function(){
+    for (var i = 0; i < this.model.items.length; i++) {
+      this.model.items[i].image = images[i];
+    };
   },
 
 
@@ -66,8 +75,8 @@ Controller.prototype = {
     this.tinderView.hide();
     this.comparinatorView.show(); // TODO: Make deferred object
     this.listView.switchToComparinator();
-    this.comparinatorView.replaceStage(1,"#", this.list.pickItem(0).name.text, "Fresh Roll");
-    this.comparinatorView.replaceStage(2,"#", this.list.pickItem(1).name.text, "Fresh Roll");
+    this.comparinatorView.replaceStage(1, this.list.pickItem(0).image, this.list.pickItem(0).name.text, "Fresh Roll");
+    this.comparinatorView.replaceStage(2, this.list.pickItem(1).image, this.list.pickItem(1).name.text, "Fresh Roll");
     this.listView.selectItem(1);
     this.listView.selectItem(2);
   },
@@ -83,7 +92,7 @@ Controller.prototype = {
     this.list.removeItem(1);
     if (this.list.items.length > 1){
       // refresh both stages
-      this.comparinatorView.replaceStage(2,"#", this.list.pickItem(1).name.text, "Fresh Roll");
+      this.comparinatorView.replaceStage(2,this.list.pickItem(1).image, this.list.pickItem(1).name.text, "Fresh Roll");
       // refresh the list
       this.updateView();
       this.listView.selectItem(1);
@@ -99,8 +108,8 @@ Controller.prototype = {
     this.list.removeItem(0);
     if (this.list.items.length > 1){
       // refresh both stages
-      this.comparinatorView.replaceStage(1,"#", this.list.pickItem(0).name.text, "Fresh Roll");
-      this.comparinatorView.replaceStage(2,"#", this.list.pickItem(1).name.text, "Fresh Roll");
+      this.comparinatorView.replaceStage(1, this.list.pickItem(0).image, this.list.pickItem(0).name.text, "Fresh Roll");
+    this.comparinatorView.replaceStage(2, this.list.pickItem(1).image, this.list.pickItem(1).name.text, "Fresh Roll");
       // refresh the list
       this.updateView();
       this.listView.selectItem(1);
