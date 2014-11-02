@@ -18,11 +18,30 @@ Controller.prototype = {
     e.preventDefault();
     this.model.addItem("Pizza");
     this.listView.appendToList("<li>Pizza</li>");
+  },
+
+  fetchList: function(){
+    $.ajax("/food-item").done(function(data){
+
+      this.model.items = data.results.fresh_roll
+
+      $(".overlay").fadeOut("slow", function(){
+        this.remove();
+      });
+
+    }.bind(this));
   }
 
 }
 
 $(document).ready(function(){
   app = new Controller(new ListView(), new TinderView(), new DishList());
+
+  var overlay = '<div class="overlay">' +
+            '<img class="loading" src="http://bit.ly/pMtW1K">' +
+            '</div>';
+  $(overlay).appendTo('body');
+
+  app.fetchList();
   app.bindEvents();
 });
