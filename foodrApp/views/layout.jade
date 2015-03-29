@@ -1,0 +1,22 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/normalize.css')
+    link(rel='stylesheet', href='/stylesheets/foundation.min.css')
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    header.contain-to-grid.sticky
+      nav.top-bar(data-topbar='data-topbar', role='navigation', data-options='sticky_on: large')
+          ul.title-area
+            li.name
+              h1
+                a(href='/')= title
+    block content
+
+    script(src='https://code.jquery.com/jquery-1.11.1.min.js')
+    script(src='/javascripts/comparinatorView.js')
+    script(src='/javascripts/dishList.js')
+    script(src='/javascripts/listView.js')
+    script(src='/javascripts/tinderView.js')
+    script(src='/javascripts/controller.js')
